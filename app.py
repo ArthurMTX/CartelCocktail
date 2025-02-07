@@ -39,6 +39,9 @@ def analyze():
         top_artists = app.spotify_client.get_playlist_top_artists(playlist_url)
         logging.debug(f"Top artists: {top_artists}")
 
+        playlist_info = app.spotify_client.get_playlist_info(playlist_url)
+        logging.debug(f"Playlist info: {playlist_info}")
+
         # Analyze the moods and get detailed characteristics
         total_count = sum(count for _, count, _ in top_artists)
         genres_with_weights = []
@@ -71,7 +74,9 @@ def analyze():
                 {"energetic": 100.0}, num_cocktails=1
             )
 
-        return render_template('results.html', 
+        return render_template('results.html',
+                              playlist_name=playlist_info["name"], playlist_owner=playlist_info["owner"],
+                              playlist_description=playlist_info["description"], playlist_image=playlist_info["image"],
                               artists=[(name, count) for name, count, _ in top_artists],
                               artist_genres=[(name, genres) for name, _, genres in top_artists],
                               mood_scores=mood_scores,

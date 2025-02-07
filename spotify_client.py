@@ -58,6 +58,37 @@ class SpotifyClient:
             "name": artist_data.get("name", ""),
             "genres": artist_data.get("genres", [])
         }
+    
+    def get_playlist_info(self, playlist_url):
+        if not self.token:
+            raise Exception("Spotify client not properly initialized")
+
+        try:
+            playlist_id = playlist_url.split('/')[-1].split('?')[0]
+            headers = {"Authorization": f"Bearer {self.token}"}
+
+            response = requests.get(f"https://api.spotify.com/v1/playlists/{playlist_id}", headers=headers)
+
+            if response.status_code != 200:
+                error_msg = f"Failed to get playlist. Status: {response.status_code}"
+                try:
+                    error_msg += f", Details: {response.json()}"
+                except:
+                    pass
+                logging.error(error_msg)
+                raise Exception(error_msg)
+
+            playlist_data = response.json()
+            return {
+                "name": playlist_data.get("name", ""),
+                "description": playlist_data.get("description", ""),
+                "owner": playlist_data.get("owner", {}).get("display_name", ""),
+                "image": playlist_data.get("images", [{}])[0].get("url", "")
+            }
+
+        except Exception as e:
+            logging.error(f"Error getting playlist info: {str(e)}")
+            raise
 
     def get_playlist_top_artists(self, playlist_url):
         if not self.token:

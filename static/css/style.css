@@ -319,6 +319,43 @@ h1 {
     font-weight: 500;
 }
 
+.playlist-info {
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+}
+
+.playlist-image {
+    flex: 0 0 auto;
+    margin-right: 20px;
+}
+
+.playlist-image img {
+    border-radius: 15px;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.playlist-details {
+    flex: 1;
+    color: var(--text-color);
+}
+
+.playlist-details h4 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.playlist-details p {
+    margin-bottom: 5px;
+    font-size: 1rem;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .results-container {

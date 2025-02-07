@@ -5,6 +5,19 @@
     <h2 class="text-center mt-2 mb-4">Your Cocktail Recommendations</h2>
 
     <div class="mood-section mb-5">
+        <h3>Playlist Details</h3>
+
+        <div class="playlist-info">
+            <div class="playlist-image">
+                <img src="{{ playlist_image }}" alt="{{ playlist_name }}">
+            </div>
+            <div class="playlist-details">
+                <h4>{{ playlist_name }}</h4>
+                <p>{{ playlist_description }}</p>
+                <p>Created by <strong>{{ playlist_owner }}</strong></p>
+            </div>
+        </div>        
+
         <h3>Musical Analysis</h3>
 
         <!-- Graphique radar des caractéristiques -->
