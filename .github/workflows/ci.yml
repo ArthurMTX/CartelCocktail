@@ -1,0 +1,30 @@
+name: CI Tests
+
+on:
+  push:
+    branches:
+      - main
+      - feature/*
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout du repo
+        uses: actions/checkout@v3
+
+      - name: Installer Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Installer les dépendances
+        run: |
+          pip install -r requirements.txt
+
+      - name: 🚀 Lancer les tests avec pytest
+        run: pytest tests/
