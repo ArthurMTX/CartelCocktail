@@ -100,7 +100,7 @@ class MoodAnalyzer:
 
     def _calculate_mood_scores(self, characteristics: np.ndarray) -> Dict[str, float]:
         """Calcule les scores pour chaque mood basé sur les caractéristiques musicales"""
-        # Définition des critères pour chaque mood
+        # Définition des critères pour chaque mood (un peu le bordel ici..)
         mood_criteria = {
             "energetic": lambda c: (c[0] * 0.5 + c[1] * 0.3 + c[3] * 0.2) * 100,
             "chill": lambda c: ((1 - c[0]) * 0.4 + (1 - c[3]) * 0.3 + c[2] * 0.3) * 100,
