@@ -23,6 +23,9 @@ jobs:
         with:
           python-version: 3.11
 
+      - name: Définir PYTHONPATH
+        run: echo "PYTHONPATH=$PWD" >> $GITHUB_ENV
+
       - name: Installer les dépendances
         run: pip install -r requirements.txt
 
