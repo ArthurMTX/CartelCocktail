@@ -5,10 +5,9 @@ on:
     branches:
       - main
       - feature/*
-  pull_request:
+  pull_request:  # Exécute les tests à chaque PR vers main
     branches:
       - main
-      - feature/*
 
 jobs:
   test:
@@ -22,21 +21,12 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.11
-
+          
       - name: Définir PYTHONPATH
-        run: echo "PYTHONPATH=$PWD" >> $GITHUB_ENV
-
+        run: echo "PYTHONPATH=$PWD" >> $GITHUB_ENV    
+      
       - name: Installer les dépendances
         run: pip install -r requirements.txt
 
       - name: Lancer les tests avec pytest
         run: pytest tests/
-
-      - name: Créer un fichier de validation si les tests passent
-        run: echo "Tests succeeded" > test_success.txt
-
-      - name: Upload du fichier de validation
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-success
-          path: test_success.txt

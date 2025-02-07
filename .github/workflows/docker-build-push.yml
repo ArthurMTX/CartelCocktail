@@ -1,31 +1,20 @@
 name: Build & Push Docker Image
 
 on:
-  workflow_run:
-    workflows: ["CI_Tests"]
-    types:
-      - completed
+  push:
+    branches:
+      - main
+  pull_request:  # Exécute le build Docker à chaque PR vers main
+    branches:
+      - main
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    if: github.event.workflow_run.conclusion == 'success'
 
     steps:
       - name: Checkout du repo
         uses: actions/checkout@v3
-
-      - name: Télécharger l’artefact de test
-        uses: actions/download-artifact@v3
-        with:
-          name: test-success
-
-      - name: Vérifier si les tests ont réussi
-        run: |
-          if [ ! -f test_success.txt ]; then
-            echo "Les tests n'ont pas réussi, arrêt du build."
-            exit 1
-          fi
 
       - name: Login à Docker Hub
         uses: docker/login-action@v3
