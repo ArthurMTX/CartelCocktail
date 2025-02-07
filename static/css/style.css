@@ -1,0 +1,357 @@
+:root {
+    --primary-color: #1a1a1a;
+    --secondary-color: #2a2a2a;
+    --accent-color: #d4af37;
+    --text-color: #ffffff;
+    --text-muted: #888888;
+}
+
+body {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    font-family: 'Oswald', sans-serif;
+    line-height: 1.6;
+}
+
+h1, h2, h3, .navbar-brand {
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+}
+
+h4, h5, h6 {
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.navbar {
+    background-color: var(--secondary-color);
+    border-bottom: 2px solid var(--accent-color);
+    padding: 1rem 0;
+}
+
+.navbar-brand {
+    color: var(--accent-color) !important;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+}
+
+.hero-section {
+    padding: 6rem 0;
+    text-align: center;
+    background: linear-gradient(rgba(26, 26, 26, 0.9), rgba(26, 26, 26, 0.9)),
+                url('/static/images/hero-bg.jpg') center/cover;
+}
+
+h1 {
+    color: var(--accent-color);
+    font-size: 4.5rem;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.results-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Section d'analyse musicale */
+.mood-section {
+    margin: 4rem 0;
+    padding: 3rem;
+    background-color: var(--secondary-color);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.analysis-charts {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    padding: 2.5rem;
+    margin-bottom: 3rem;
+}
+
+.characteristics-chart {
+    position: relative;
+    height: 400px;
+    margin-bottom: 2rem;
+}
+
+.mood-scores {
+    padding: 2.5rem;
+    background: rgba(0,0,0,0.2);
+    border-radius: 15px;
+}
+
+.mood-progress {
+    margin-bottom: 2rem;
+}
+
+.mood-progress label {
+    color: var(--text-color);
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    display: block;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+}
+
+.progress {
+    height: 2.5rem;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 1.25rem;
+    overflow: hidden;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.progress-bar {
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+    text-align: center;
+    line-height: 2.5rem;
+    font-weight: bold;
+    transition: width 0.6s ease;
+}
+
+/* Section des cocktails */
+.cocktails-section {
+    margin-top: 4rem;
+}
+
+.cocktails-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2.5rem;
+    padding: 2rem 0;
+}
+
+.cocktail-card {
+    background-color: var(--secondary-color);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.cocktail-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.4);
+}
+
+.cocktail-image {
+    position: relative;
+    padding-top: 75%;
+    overflow: hidden;
+}
+
+.cocktail-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.cocktail-card:hover .cocktail-image img {
+    transform: scale(1.05);
+}
+
+.cocktail-info {
+    padding: 2rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.cocktail-info h4 {
+    color: var(--accent-color);
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.characteristics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.characteristic-tag {
+    background-color: rgba(212, 175, 55, 0.2);
+    color: var(--accent-color);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.ingredients {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.ingredients h5 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.ingredient {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    margin: 0.3rem;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.instructions {
+    flex-grow: 1;
+}
+
+.instructions h5 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.instructions p {
+    color: var(--text-color);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* Analysis Details Card */
+.analysis-details .card {
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--accent-color);
+    border-radius: 15px;
+    padding: 2rem;
+}
+
+.analysis-details .card-title {
+    color: var(--accent-color);
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+}
+
+.analysis-details ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.analysis-details li {
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+    position: relative;
+    font-size: 1.1rem;
+}
+
+.analysis-details li:before {
+    content: "•";
+    color: var(--accent-color);
+    position: absolute;
+    left: 0;
+    font-size: 1.5rem;
+}
+
+.analysis-details strong {
+    color: var(--accent-color);
+}
+
+/* Artists Section */
+.artists-section {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 2rem;
+    border-radius: 15px;
+    margin: 2rem 0;
+}
+
+.artists-list ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.artists-list li {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.artists-list strong {
+    display: block;
+    color: var(--accent-color);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.genres-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.genre-tag {
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .results-container {
+        padding: 1rem;
+    }
+
+    .mood-section {
+        padding: 1.5rem;
+    }
+
+    .cocktails-grid {
+        grid-template-columns: 1fr;
+    }
+
+    h1 {
+        font-size: 3rem;
+    }
+
+    .characteristics-chart {
+        height: 300px;
+    }
+
+    .mood-progress label {
+        font-size: 1.2rem;
+    }
+
+    .progress {
+        height: 2rem;
+    }
+}
+
+/* Chart Customization */
+canvas#characteristicsRadar {
+    max-width: 100%;
+    height: 100% !important;
+}

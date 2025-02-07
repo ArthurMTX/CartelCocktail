@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="results-container">
+    <h2 class="text-center mb-4">Your Cocktail Recommendations</h2>
+
+    <div class="mood-section mb-5">
+        <h3>Musical Analysis</h3>
+
+        <!-- Graphique radar des caractéristiques -->
+        <div class="analysis-charts row mb-4">
+            <div class="col-md-6">
+                <div class="characteristics-chart">
+                    <h4>Musical Characteristics Analysis</h4>
+                    <canvas id="characteristicsRadar"></canvas>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mood-scores">
+                    <h4>Mood Distribution:</h4>
+                    <div class="progress-container">
+                        {% for mood, score in mood_scores.items() %}
+                        <div class="mood-progress">
+                            <label>{{ mood|title }}</label>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" 
+                                     style="width: {{ score }}%"
+                                     aria-valuenow="{{ score }}" 
+                                     aria-valuemin="0" 
+                                     aria-valuemax="100">{{ "%.1f"|format(score) }}%</div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="analysis-details">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Detailed Analysis Methodology</h5>
+                    <p class="card-text">
+                        Our advanced algorithm analyzes your playlist using a 5-dimensional musical characteristic space:
+                    </p>
+                    <ul>
+                        <li><strong>Energy:</strong> Measures the intensity and activity level of the music</li>
+                        <li><strong>Dance:</strong> Indicates the rhythm strength and danceability</li>
+                        <li><strong>Emotion:</strong> Evaluates the emotional depth and expressiveness</li>
+                        <li><strong>Intensity:</strong> Analyzes the musical density and power</li>
+                        <li><strong>Sophistication:</strong> Measures the complexity and refinement level</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="artists-section mt-4">
+            <div class="artists-list">
+                <h4>Top Artists and Their Genres:</h4>
+                <ul>
+                    {% for name, genres in artist_genres %}
+                    <li>
+                        <strong>{{ name }}</strong>
+                        <div class="genres-tags">
+                            {% for genre in genres %}
+                            <span class="genre-tag">{{ genre }}</span>
+                            {% endfor %}
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="cocktails-section">
+        <h3>Recommended Cocktails</h3>
+        <div class="cocktails-grid">
+            {% for cocktail in cocktails %}
+            <div class="cocktail-card">
+                <div class="cocktail-image">
+                    <img src="{{ cocktail.strDrinkThumb }}" alt="{{ cocktail.strDrink }}">
+                </div>
+                <div class="cocktail-info">
+                    <h4>{{ cocktail.strDrink }}</h4>
+                    <div class="characteristics">
+                        {% for characteristic in cocktail.mood_characteristics %}
+                        <span class="characteristic-tag">{{ characteristic }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="ingredients">
+                        <h5>Ingredients:</h5>
+                        {% for i in range(1, 16) %}
+                            {% set ingredient = cocktail['strIngredient' ~ i] %}
+                            {% set measure = cocktail['strMeasure' ~ i] %}
+                            {% if ingredient %}
+                                <span class="ingredient">
+                                    {% if measure %}{{ measure }} {% endif %}{{ ingredient }}
+                                </span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="instructions">
+                        <h5>Instructions:</h5>
+                        <p>{{ cocktail.strInstructions }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{{ url_for('index') }}" class="btn btn-outline-primary">Try Another Playlist</a>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const ctx = document.getElementById('characteristicsRadar').getContext('2d');
+    new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: ['Energy', 'Dance', 'Emotion', 'Intensity', 'Sophistication'],
+            datasets: [{
+                label: 'Musical Characteristics',
+                data: {{ characteristics|tojson }},
+                backgroundColor: 'rgba(212, 175, 55, 0.2)',
+                borderColor: 'rgba(212, 175, 55, 1)',
+                borderWidth: 2,
+                pointBackgroundColor: 'rgba(212, 175, 55, 1)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgba(212, 175, 55, 1)'
+            }]
+        },
+        options: {
+            scales: {
+                r: {
+                    angleLines: {
+                        color: 'rgba(255, 255, 255, 0.2)'
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.2)'
+                    },
+                    pointLabels: {
+                        color: '#ffffff'
+                    },
+                    ticks: {
+                        color: '#ffffff',
+                        backdropColor: 'transparent'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#ffffff'
+                    }
+                }
+            }
+        }
+    });
+});
+</script>
+{% endblock %}

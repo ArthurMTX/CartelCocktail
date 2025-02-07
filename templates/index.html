@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero-section">
+    <h1 class="text-center">Discover Your Signature Cocktail</h1>
+    <p class="text-center lead">Let your music taste guide you to the perfect drink</p>
+    
+    {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+    
+    <div class="form-container">
+        <form action="{{ url_for('analyze') }}" method="POST">
+            <div class="mb-3">
+                <label for="playlist_url" class="form-label">Spotify Playlist URL</label>
+                <input type="text" class="form-control" id="playlist_url" name="playlist_url" 
+                       placeholder="https://open.spotify.com/playlist/..." required>
+            </div>
+            <button type="submit" class="btn btn-primary">Analyze Playlist</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
