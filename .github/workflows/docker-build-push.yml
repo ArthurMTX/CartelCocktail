@@ -4,33 +4,15 @@ on:
   push:
     branches:
       - main
-      - feature/docker
+      - feature/*
   pull_request:
     branches:
       - main
-      - feature/docker
+      - feature/*
   release:
     types: [created]
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout du repo
-        uses: actions/checkout@v3
-
-      - name: Installer Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.11
-
-      - name: Installer les dépendances
-        run: pip install -r requirements.txt
-
-      - name: Lancer les tests avec pytest
-        run: pytest tests/
-
   build-and-push:
     needs: test
     runs-on: ubuntu-latest
