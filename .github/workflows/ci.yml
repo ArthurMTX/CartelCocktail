@@ -33,7 +33,7 @@ jobs:
         run: echo "Tests succeeded" > test_success.txt
 
       - name: Upload du fichier de validation
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-success
           path: test_success.txt
