@@ -28,7 +28,7 @@ Une application web qui recommande des cocktails basés sur l'analyse d'une play
 
 1. Cloner le repository :
 ```bash
-git clone <repository-url>
+git clone https://github.com/ArthurMTX/CartelCocktail
 cd cartel-cocktails
 ```
 
@@ -37,11 +37,12 @@ cd cartel-cocktails
 pip install -r requirements.txt
 ```
 
-3. Configurer les variables d'environnement :
+3. Configurer les variables d'environnement dans le .env
 ```bash
-export SPOTIFY_CLIENT_ID='votre-client-id'
-export SPOTIFY_CLIENT_SECRET='votre-client-secret'
-export COCKTAILDB_API_KEY='votre-api-key'
+touch .env
+SPOTIFY_CLIENT_ID='votre-client-id'
+SPOTIFY_CLIENT_SECRET='votre-client-secret'
+COCKTAILDB_API_KEY='votre-api-key'
 ```
 
 ## Tests
@@ -80,14 +81,3 @@ python main.py
 ├── static/            # Assets statiques (CSS, JS)
 └── tests/             # Tests unitaires
 ```
-
-## Contributions
-
-Les contributions sont les bienvenues ! N'hésitez pas à :
-- Signaler des bugs
-- Proposer des améliorations
-- Soumettre des pull requests
-
-## Licence
-
-MIT License
