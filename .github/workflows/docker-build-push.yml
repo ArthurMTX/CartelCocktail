@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - main
+      - feature/*
   pull_request:  # Exécute le build Docker à chaque PR vers main
     branches:
       - main
+      - feature/*
 
 jobs:
   build-and-push:
