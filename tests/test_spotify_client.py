@@ -4,20 +4,29 @@ from unittest.mock import patch, MagicMock
 
 @pytest.fixture
 def spotify_client():
-    return SpotifyClient()
-
-def test_get_token(spotify_client):
-    with patch('requests.post') as mock_post:
+    # Patch de requests.post pour simuler l'obtention d'un token valide
+    with patch('spotify_client.requests.post') as mock_post:
         mock_response = MagicMock()
         mock_response.status_code = 200
         mock_response.json.return_value = {"access_token": "test-token"}
         mock_post.return_value = mock_response
-        token = spotify_client._get_token()
+        # L'instanciation se fait dans le contexte du patch
+        yield SpotifyClient()
+
+def test_get_token():
+    with patch('spotify_client.requests.post') as mock_post:
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = {"access_token": "test-token"}
+        mock_post.return_value = mock_response
+
+        client = SpotifyClient()
+        token = client._get_token()
         assert token == "test-token"
 
 def test_get_playlist_top_artists(spotify_client):
-    with patch('requests.get') as mock_get:
-        # Mock pour la requête de playlist
+    with patch('spotify_client.requests.get') as mock_get:
+        # [On simule ici la réponse de la requête de playlist]
         playlist_response = MagicMock()
         playlist_response.status_code = 200
         playlist_response.json.return_value = {
@@ -28,7 +37,7 @@ def test_get_playlist_top_artists(spotify_client):
             ]
         }
 
-        # Mock pour la requête des détails d'artiste
+        # [On simule ici la réponse pour les détails de l'artiste]
         artist_response = MagicMock()
         artist_response.status_code = 200
         artist_response.json.return_value = {
@@ -36,7 +45,7 @@ def test_get_playlist_top_artists(spotify_client):
             "genres": ["pop", "dance"]
         }
 
-        # Configuration du mock pour retourner différentes réponses
+        # Configuration du side effect pour retourner la bonne réponse selon l'URL
         def get_side_effect(url, **kwargs):
             if "playlists" in url:
                 return playlist_response
