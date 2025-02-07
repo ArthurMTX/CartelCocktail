@@ -2,7 +2,7 @@ name: Build & Push Docker Image
 
 on:
   workflow_run:
-    workflows: ["CI Tests"]
+    workflows: ["CI_Tests"]
     types:
       - completed
 
