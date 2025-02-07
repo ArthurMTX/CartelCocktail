@@ -5,27 +5,62 @@ on:
     branches:
       - main
       - feature/docker
+  pull_request:
+    branches:
+      - main
+      - feature/docker
+  release:
+    types: [created]
 
 jobs:
-  build-and-push:
+  test:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout du repo
         uses: actions/checkout@v3
 
+      - name: Installer Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Installer les dépendances
+        run: pip install -r requirements.txt
+
+      - name: Lancer les tests avec pytest
+        run: pytest tests/
+
+  build-and-push:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event_name == 'release'
+
+    steps:
+      - name: Checkout du repo
+        uses: actions/checkout@v3
+
       - name: Login à Docker Hub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
+      - name: Déterminer le tag de l'image
+        id: docker_tag
+        run: |
+          if [[ "${{ github.event_name }}" == "release" ]]; then
+            echo "TAG=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+          else
+            echo "TAG=${{ github.sha }}" >> $GITHUB_ENV
+          fi
+
       - name: Build de l’image Docker
         run: |
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/cartel-cocktail:latest .
-          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/cartel-cocktail:latest ${{ secrets.DOCKERHUB_USERNAME }}/cartel-cocktail:${{ github.sha }}
+          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/cartel-cocktail:latest ${{ secrets.DOCKERHUB_USERNAME }}/cartel-cocktail:${{ env.TAG }}
 
       - name: Push de l’image sur Docker Hub
         run: |
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/cartel-cocktail:latest
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/cartel-cocktail:${{ github.sha }}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/cartel-cocktail:${{ env.TAG }}
