@@ -1,13 +1,14 @@
-name: CI Tests
+name: CI_Tests
 
 on:
   push:
     branches:
       - main
       - feature/*
-  pull_request:
+  pull_request:  # Exécute les tests à chaque PR vers main
     branches:
       - main
+      - feature/*
 
 jobs:
   test:
@@ -23,11 +24,10 @@ jobs:
           python-version: 3.11
 
       - name: Définir PYTHONPATH
-        run: echo "PYTHONPATH=$PWD" >> $GITHUB_ENV
-
+        run: echo "PYTHONPATH=$PWD" >> $GITHUB_ENV    
+      
       - name: Installer les dépendances
-        run: |
-          pip install -r requirements.txt
+        run: pip install -r requirements.txt
 
       - name: Lancer les tests avec pytest
         run: pytest tests/
